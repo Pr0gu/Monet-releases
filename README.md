@@ -5,7 +5,7 @@ Monet is a macOS menu bar app that shows the usage limits of every Claude accoun
 This repository holds **only Monet's releases**: the notarized disk image of each version, and the signed update
 feed (`appcast.xml`) that Monet checks once a day. Monet's source code is private.
 
-You need a Mac with macOS 26 (Tahoe) or later, and one or more Claude accounts on a paid plan (Pro, Max or Team).
+You need a Mac with macOS 15.4 (Sequoia) or later, and one or more Claude accounts on a paid plan (Pro, Max or Team).
 
 ## Install
 
@@ -38,25 +38,27 @@ Monet never sees it.
 
 1. In Monet, click **Add Account**. It is in the first-run window, in **Settings › Accounts** (**+ Add Account**),
    and in the menu bar panel before any account is added.
-2. A private browsing window opens with Anthropic's **Log in** page. It starts signed out, whatever your own
-   browser is signed in to. Log in with the account you want to add (by email, Google or Apple), then click
-   **Authorize**. The window closes by itself.
-3. Monet says the account is connected, under its Claude name (for example **"Jane Doe is connected"**), and you
-   can rename it there, to "Work" for instance.
-4. Click **Add Another** for the next account, or **Done**. Each new window starts signed out again, so there is
-   nothing to sign out of in between, and your own browser is never touched.
+2. Anthropic's **Log in** page opens in your default browser, where your saved passwords are. Log in with the
+   account you want to add (by email, Google or Apple), then click **Authorize**.
+3. Monet says the account is connected, under its Claude name (for example **"Jane Doe is connected"**), or under
+   the name your other Macs give it, and you can rename it there, to "Work" for instance. If your other Macs keep it
+   hidden, Monet says so and offers **Unhide**.
+4. Click **Add Another** for the next account, or **Done**.
 
-If you log in with Google or Apple, you type that account's details each time, because the private window keeps
-nothing from one sign-in to the next.
+Your browser signs Monet in to the Claude account it is signed in to. To add a different account, sign out of
+claude.ai in your browser first, then click **Add Another**.
 
-**Prefer your own browser?** Click **Use My Browser Instead**, next to Cancel. Anthropic's page then opens in your
-browser, which signs Monet in to whichever Claude account the browser uses. To add a different one, sign out of
-claude.ai there first. If the private window can't open, Monet says **"The sign-in window didn't open"** and offers
-the same button.
+If you add an account that is already in Monet, its sign-in is renewed, and Monet says so (**"Jane Doe is signed in
+again"**). While Monet waits, **Cancel** stops the sign-in; if nothing comes back within 10 minutes, Monet says so and
+saves nothing, and **Try Again** starts over. If an account's access ever expires, its row says so and offers **Sign
+in**.
 
-If you add the same account twice, Monet says **"That account is already in Monet"** and changes nothing. If the
-page closes before you click Authorize, or nothing comes back within 10 minutes, Monet says so and saves nothing;
-click **Try Again**. If an account's access ever expires, its row says so and offers **Sign in**.
+**Sign in again before it ends.** Each account's sign-in in Monet lasts about four weeks. In its last week Settings ›
+Accounts says when it ends and offers **Sign In Again…**, the account's row says **sign-in ends Thu** where it has room
+(not while Monet is waiting for Anthropic or can't reach it), and three days before the end a notification offers
+**Sign In Again**. You can sign in again at any time from the account's menu in the panel or in
+Settings. Monet asks you to sign in as that account. If your browser signs in as a different one, Monet tells you and
+adds nothing.
 
 **To remove an account:** Settings › Accounts, select it, then **− Remove**. This deletes its sign-in and its
 history on this Mac. Your Claude account itself is not changed.
@@ -73,17 +75,19 @@ daily check, turn off **Settings › About › Check for updates automatically**
 
 | Where | Why |
 | --- | --- |
-| claude.com, in a private sign-in window (or your browser) | Anthropic's sign-in page, when you add an account |
+| claude.com, in your browser | Anthropic's sign-in page, when you add an account |
 | platform.claude.com | to finish a sign-in, and to renew an account's access when it expires |
 | api.anthropic.com | to read each account's usage limits, and its name and email when it is added |
 | status.claude.com | Claude's service status, every 5 minutes, to show incidents |
 | github.com (this repository) | the daily update check, and the download when you install an update |
 | iCloud (Apple), through macOS | to keep Monet's settings the same on your Macs signed in to the same iCloud: account names, colours, alert levels and plans. Never a sign-in, a token or usage |
+| api.draumo.com, only while Settings › Draumo is on | your card in your own Draumo's top bar, with your key (`statusItems:write` only). Opt-in, off by default, per Mac. Sent: the names you gave your accounts in Monet (one you haven't renamed goes as "Account 1", "Account 2" and so on), each one's 5-hour and week use and reset times, and which account has the most room left. Never sent: emails, account ids, org names, Claude profile names, plans, bills, tokens, project names, costs. Test checks your key with a dry run that stores nothing, and Monet never reads your Draumo cards. To stop it, switch it off: Monet deletes the card |
 
 Monet asks Anthropic only for permission to read your profile and usage (`user:profile`). It identifies itself
 honestly, as `Monet/<version>`.
 
-**What it keeps on your Mac.** Each account's sign-in is kept in your macOS Keychain, in Monet's own items. The account list and
+**What it keeps on your Mac.** Each account's sign-in, and your Draumo key if you save one, are kept in your macOS
+Keychain, in Monet's own items. The account list and
 usage history are in `~/Library/Application Support/Monet/`. Nothing leaves your Mac except the requests above.
 
 **Cost.** Monet adds up what your Claude Code use would cost at API prices, from Claude Code's own logs on this Mac
