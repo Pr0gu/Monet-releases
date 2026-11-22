@@ -81,12 +81,13 @@ daily check, turn off **Settings › About › Check for updates automatically**
 | status.claude.com | Claude's service status, every 5 minutes, to show incidents |
 | github.com (this repository) | the daily update check, and the download when you install an update |
 | iCloud (Apple), through macOS | to keep Monet's settings the same on your Macs signed in to the same iCloud: account names, colours, alert levels and plans. Never a sign-in, a token or usage |
-| api.draumo.com, only while Settings › Draumo is on | your card in your own Draumo's top bar, with your key (`statusItems:write` only). Opt-in, off by default, per Mac. Sent: the names you gave your accounts in Monet (one you haven't renamed goes as "Account 1", "Account 2" and so on), each one's 5-hour and week use and reset times, and which account has the most room left. Never sent: emails, account ids, org names, Claude profile names, plans, bills, tokens, project names, costs. Test checks your key with a dry run that stores nothing, and Monet never reads your Draumo cards. To stop it, switch it off: Monet deletes the card |
+| app.draumo.com, in your browser | Draumo's page where you allow Monet and choose where its card shows, when you press Connect to Draumo (1.9) |
+| api.draumo.com, only once you connect Monet to Draumo | your card in your own Draumo's top bar. Opt-in, off by default, per Mac. Monet can post and update its own card in your top bar; it can't read anything in Draumo or see anyone else's cards. Sent: the names you gave your accounts in Monet (one you haven't renamed goes as "Account 1", "Account 2" and so on), each one's 5-hour and week use and reset times, and which account has the most room left. Never sent: emails, account ids, org names, Claude profile names, plans, bills, tokens, project names, costs. Disconnect ends Monet's access, and Draumo takes the card down. "Use a key instead" takes an API key with `statusItems:write` only; Test checks it with a dry run that stores nothing. Monet never reads your Draumo cards |
 
 Monet asks Anthropic only for permission to read your profile and usage (`user:profile`). It identifies itself
 honestly, as `Monet/<version>`.
 
-**What it keeps on your Mac.** Each account's sign-in, and your Draumo key if you save one, are kept in your macOS
+**What it keeps on your Mac.** Each account's sign-in, and Monet's Draumo token (or your key) if you connect, are kept in your macOS
 Keychain, in Monet's own items. The account list and
 usage history are in `~/Library/Application Support/Monet/`. Nothing leaves your Mac except the requests above.
 
